@@ -1,0 +1,22 @@
+body {
+	text-align: center;
+	margin: 0 auto;
+	font-size: 40px;
+	background-color: grey;
+	color: white;
+}
+.controls {
+	margin-top: 30px;
+	text-decoration: none;
+}
+#start {
+	color: lightGreen;
+	margin-right: 30px;
+}
+#stop {
+	color: red;
+}
+.stopwatch {
+	margin-top: 20px;
+	font-size: 80px;
+}
