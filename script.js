@@ -31,31 +31,37 @@ class Stopwatch extends React.Component {
     }
 
     start() {
-        if (!this.state.running) {
-        	this.state.running = true;
-        	this.watch = setInterval(() => this.step(), 10);
+        if (!this.running) {
+          (this.running = true), (this.watch = setInterval(() => this.step(), 10));
         }
     }
 
     step() { //sprawdza czy tier jest uruchomiony
-        if (!this.state.running) return;
+        if (!this.running) return;
         this.calculate(); //jeśli tak to przelicza
     }
 
     calculate() { //zerowanie wartości milisekund i sekund i zwiększanie sekund i minut
         this.state.times.miliseconds += 1;
-       		if (this.state.times.miliseconds >= 100) {
-            	this.state.times.seconds += 1;
-            	this.state.times.miliseconds = 0;
-        	}
-        	if (this.state.times.seconds >= 60) {
-            	this.state.times.minutes += 1;
-            	this.state.times.seconds = 0;
-        	}
+   		if (this.state.times.miliseconds >= 100) {
+        	this.state.times.seconds += 1;
+        	this.state.times.miliseconds = 0;
+    	}
+    	if (this.state.times.seconds >= 60) {
+        	this.state.times.minutes += 1;
+        	this.state.times.secondstate.s = 0;
+    	}
+        this.setState({
+            times: {
+              miliseconds: this.state.times.miliseconds,
+              seconds: this.state.times.seconds,
+              minutes: this.state.times.minutes
+            }
+        });
     }
 
     stop() { //zatrzymuje stoper i czyści interwał czyli atrybut watch
-    	this.state.running = false;
+    	this.running = false;
     	clearInterval(this.watch);
     }
 
@@ -63,11 +69,11 @@ class Stopwatch extends React.Component {
         return (
             <div className='container'>
                 <nav className='controls'>
-                    <button className='start' onClick={this.start.bind(this)}>Start</button>
-                    <button className='stop' onClick={this.stop.bind(this)}>Stop</button>
+                    <button className='start' onClick={() => this.start()}>Start</button>
+                    <button className='stop' onClick={() => this.stop()}>Stop</button>
                 </nav>
                 <div className='stopwatch'>{this.format(this.state.times)}</div>
-        </div>
+            </div>
         );
     }
 }

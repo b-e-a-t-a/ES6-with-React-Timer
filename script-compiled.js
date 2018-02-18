@@ -56,9 +56,8 @@ var Stopwatch = function (_React$Component) {
         value: function start() {
             var _this2 = this;
 
-            if (!this.state.running) {
-                this.state.running = true;
-                this.watch = setInterval(function () {
+            if (!this.running) {
+                this.running = true, this.watch = setInterval(function () {
                     return _this2.step();
                 }, 10);
             }
@@ -67,7 +66,7 @@ var Stopwatch = function (_React$Component) {
         key: 'step',
         value: function step() {
             //sprawdza czy tier jest uruchomiony
-            if (!this.state.running) return;
+            if (!this.running) return;
             this.calculate(); //jeśli tak to przelicza
         }
     }, {
@@ -81,19 +80,28 @@ var Stopwatch = function (_React$Component) {
             }
             if (this.state.times.seconds >= 60) {
                 this.state.times.minutes += 1;
-                this.state.times.seconds = 0;
+                this.state.times.secondstate.s = 0;
             }
+            this.setState({
+                times: {
+                    miliseconds: this.state.times.miliseconds,
+                    seconds: this.state.times.seconds,
+                    minutes: this.state.times.minutes
+                }
+            });
         }
     }, {
         key: 'stop',
         value: function stop() {
             //zatrzymuje stoper i czyści interwał czyli atrybut watch
-            this.state.running = false;
+            this.running = false;
             clearInterval(this.watch);
         }
     }, {
         key: 'render',
         value: function render() {
+            var _this3 = this;
+
             return React.createElement(
                 'div',
                 { className: 'container' },
@@ -102,12 +110,16 @@ var Stopwatch = function (_React$Component) {
                     { className: 'controls' },
                     React.createElement(
                         'button',
-                        { className: 'start', onClick: this.start.bind(this) },
+                        { className: 'start', onClick: function onClick() {
+                                return _this3.start();
+                            } },
                         'Start'
                     ),
                     React.createElement(
                         'button',
-                        { className: 'stop', onClick: this.stop.bind(this) },
+                        { className: 'stop', onClick: function onClick() {
+                                return _this3.stop();
+                            } },
                         'Stop'
                     )
                 ),
