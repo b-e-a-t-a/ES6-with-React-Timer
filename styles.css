@@ -9,12 +9,16 @@ body {
 	margin-top: 30px;
 	text-decoration: none;
 }
-#start {
-	color: lightGreen;
+.start {
+	background-color: lightGreen;
+	font-size: 25px;
 	margin-right: 30px;
+	cursor: pointer;
 }
-#stop {
-	color: red;
+.stop {
+	background-color: red;
+	font-size: 25px;
+	cursor: pointer;
 }
 .stopwatch {
 	margin-top: 20px;
